@@ -196,6 +196,6 @@ export default class ResultComponent {
       currentY += 5;
     }
 
-    window.open(doc.output('bloburl'), '_blank');
+    doc.save('reporte_cursos.pdf');
   }
 }
