@@ -1,0 +1,144 @@
+<form class="space-y-4 mb-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nombres-apellidos" class="block text-lg font-medium text-white"
+      >Nombres y Apellidos</label
+    >
+    <input
+      type="text"
+      id="nombres-apellidos"
+      name="nomape"
+      formControlName="nomape"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
+      placeholder=""
+      (input)="onLetterInput($event)"
+      [ngClass]="{
+        'border-red-500 border-2':
+          form.get('nomape')?.invalid && form.get('nomape')?.touched,
+        'border-green-500 border-2':
+          form.get('nomape')?.valid && form.get('nomape')?.touched,
+        'border-gray-300': !form.get('nomape')?.touched
+      }"
+      required
+    />
+    @if (form.get('nomape')?.invalid && form.get('nomape')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('nomape')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      } @if(form.get('nomape')?.hasError('pattern')){
+      <small>Solo se permiten letras y espacios.</small>
+      }
+    </div>
+    }
+  </div>
+
+  <div>
+    <label for="correo" class="block text-lg font-medium text-white"
+      >Correo Electrónico</label
+    >
+    <input
+      type="email"
+      id="correo"
+      name="correo"
+      formControlName="correo"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
+      placeholder=""
+      (input)="onCorreoInput($event)"
+      [ngClass]="{
+        'border-red-500 border-2':
+          form.get('correo')?.invalid && form.get('correo')?.touched,
+        'border-green-500 border-2':
+          form.get('correo')?.valid && form.get('correo')?.touched,
+        'border-gray-300': !form.get('correo')?.touched
+      }"
+      required
+    />
+    @if (form.get('correo')?.invalid && form.get('correo')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('correo')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      } @if(form.get('correo')?.hasError('email')){
+      <small>El correo no es válido.</small>
+      }
+    </div>
+    }
+  </div>
+
+  <div>
+    <label for="celular" class="block text-lg font-medium text-white"
+      >Celular</label
+    >
+    <input
+      type="tel"
+      id="celular"
+      name="celular"
+      formControlName="celular"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
+      placeholder=""
+      (input)="onNumberInput($event)"
+      maxlength="9"
+      [ngClass]="{
+        'border-red-500 border-2':
+          form.get('celular')?.invalid && form.get('celular')?.touched,
+        'border-green-500 border-2':
+          form.get('celular')?.valid && form.get('celular')?.touched,
+        'border-gray-300': !form.get('celular')?.touched
+      }"
+      required
+    />
+    @if (form.get('celular')?.invalid && form.get('celular')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('celular')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      } @if(form.get('celular')?.hasError('pattern')){
+      <small>El número de celular no es válido.</small>
+      }
+    </div>
+    }
+  </div>
+
+  <div>
+    <label for="dni" class="block text-lg font-medium text-white">DNI</label>
+    <input
+      type="text"
+      id="dni"
+      name="dni"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
+      placeholder=""
+      required
+      formControlName="dni"
+      (input)="onNumberInput($event)"
+      [ngClass]="{
+        'border-red-500 border-2':
+          form.get('dni')?.invalid && form.get('dni')?.touched,
+        'border-green-500 border-2':
+          form.get('dni')?.valid && form.get('dni')?.touched,
+        'border-gray-300': !form.get('dni')?.touched
+      }"
+      maxlength="8"
+    />
+    @if (form.get('dni')?.invalid && form.get('dni')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('dni')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      } @if(form.get('dni')?.hasError('pattern')){
+      <small>El DNI no es válido.</small>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="flex items-center justify-center w-full">
+    <button
+      type="submit"
+      class="bg-green-600 text-white py-2 px-4 rounded-lg text-2xl font-bold transition duration-300 mt-6"
+      [disabled]="form.invalid"
+      [ngClass]="{
+        'bg-gray-400': form.invalid,
+        'hover:bg-green-500': !form.invalid
+      }"
+    >
+      Continuar
+      <i class="bi bi-arrow-right ml-2 animate-move-left-right text-2xl"></i>
+    </button>
+  </div>
+</form>

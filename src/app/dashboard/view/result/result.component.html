@@ -1,0 +1,182 @@
+<div class="bg-gray-100 min-h-screen w-full">
+  <nav
+    class="inline-flex items-center fixed justify-between px-6 py-6 w-full h-[85px] top-0 left-0 bg-white z-10"
+  >
+    <div class="flex items-center lg:mx-40 mx-10">
+      <img
+        [src]="logo"
+        class="rounded-md w-[100px] h-auto cursor-pointer"
+        (click)="goToDashboard()"
+      />
+    </div>
+  </nav>
+  <div class="inline-block mt-[85px] lg:mx-40 mx-10 pt-20">
+    <div class="inline-block lg:inline-flex gap-10 space-y-5 lg:space-y-0">
+      <div>
+        <p class="text-xl text-justify">
+          Hola
+          <span class="font-bold">{{ formDataEstudiante.nomape }}</span>
+          , gracias por utilizar nuestro simulador de convalidaciones, a
+          continuación te mostramos los detalles de tu simulación
+        </p>
+      </div>
+      <div class="w-full">
+        <table class="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr class="bg-gray-100">
+              <th
+                class="py-2 px-4 border-b text-left text-sm font-semibold"
+                colSpan="2"
+              >
+                Combinación
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 border-t-2 border-gray-200">
+            <tr class="hover:bg-gray-50">
+              <td
+                class="py-2 px-4 border-b text-sm whitespace-nowrap font-semibold"
+              >
+                Instituto procedencia
+              </td>
+              <td class="py-2 px-4 border-b text-sm uppercase">
+                {{ formDataCarrera.institucion.nombre }}
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td
+                class="py-2 px-4 border-b text-sm whitespace-nowrap font-semibold"
+              >
+                Carrera procedencia
+              </td>
+              <td class="py-2 px-4 border-b text-sm uppercase">
+                {{ formDataCarrera.carrera.nombre }}
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td
+                class="py-2 px-4 border-b text-sm whitespace-nowrap font-semibold"
+              >
+                Carrera UPLA
+              </td>
+              <td class="py-2 px-4 border-b text-sm uppercase">
+                {{ formDataCarrera.carreraupla.nombre }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div
+          class="bg-white px-8 py-4 w-full lg:w-auto rounded-lg border-l-8 border-sky-700"
+        >
+          <p class="font-black text-sky-700 text-lg">PODRÍAS CONVALIDAR</p>
+          <div class="whitespace-nowrap flex justify-center items-center">
+            <p>
+              <span class="font-bold">{{ listaConvalidar.length }}</span> CURSOS
+            </p>
+            <div class="relative w-[100px] mx-5">
+              <div class="w-full h-2 bg-gray-300 rounded-full">
+                <div
+                  class="bg-blue-600 h-2 text-xs font-semibold text-center p-0.5 leading-none rounded-l-full"
+                  [style.width.%]="progressPercentage"
+                ></div>
+              </div>
+            </div>
+            <p class="text-gray-500">DE {{ listaCursos.length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full items-center flex justify-center my-10 font-black text-3xl uppercase text-gray-600"
+    >
+      <h3>Resultado</h3>
+    </div>
+    @if(listaConvalidar.length != 0){
+    <div class="w-full">
+      @for (item of cursosAgrupados | keyvalue: ordenarPorCiclo; track $index) {
+      <div class="lg:inline-flex inline-block mb-2 w-full shadow-md rounded-lg">
+        <div
+          class="whitespace-nowrap bg-gray-200 lg:w-[150px] w-full items-center justify-center flex text-center"
+        >
+          <p class="w-full">CICLO {{ item.key }}</p>
+        </div>
+        <div
+          class="lg:flex inline-block gap-x-5 bg-white p-2 w-full rounded-r-lg"
+        >
+          @for (curso of item.value; track $index) {
+          <div
+            class="lg:inline-flex inline-block px-8 py-2 border-2 rounded-lg text-center w-full"
+            [ngClass]="{
+              'bg-sky-500 text-white': isConvalidar(curso.id),
+              'bg-white': !isConvalidar(curso.id)
+            }"
+          >
+            <p class="w-full justify-center flex items-center">
+              {{ curso.nombre }}
+            </p>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="block items-center justify-center pb-10 lg:mx-40 mx-10">
+    @if(listaConvalidar.length == 0){
+    <div class="flex">
+      <div class="inline-block lg:flex gap-10 w-full">
+        <div class="flex lg:w-[900px] w-full h-auto rounded-lg shadow-lg">
+          <img
+            [src]="img"
+            alt=""
+            class="object-cover justify-center flex items-center rounded-lg"
+          />
+        </div>
+        <div class="flex">
+          <div class="items-center justify-center block text-center">
+            <h3 class="text-2xl font-bold mb-5 mt-5">
+              No se pudo generar la simulación
+            </h3>
+            <p class="text-lg font-normal mb-5 w-full inline-flex">
+              Al parecer la combinación que elegiste no ha generado ninguna
+              simulación, es probable que tu instituto o carrera de procedencia
+              no este disponible por este medio.
+            </p>
+            <p class="text-lg font-normal mb-5">
+              Prueba otra combinación o escríbenos para poder ayudarte con tu
+              simulación de convalidación
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    }
+    <div
+      class="inline-block lg:flex gap-10 mt-5 items-center justify-center space-y-5 w-full"
+    >
+      <button
+        class="py-4 px-4 bg-blue-900 text-white flex items-center justify-center text-2xl shadow-lg rounded-lg hover:bg-blue-700 transition-all duration-300 w-auto"
+        (click)="goToDashboard()"
+      >
+        <i class="bi bi-reply-fill mr-5"></i>Volver a intentar
+      </button>
+      <button
+        class="py-4 px-4 bg-green-700 flex items-center justify-center text-2xl shadow-lg rounded-lg hover:bg-green-500 transition-all duration-300 text-white"
+      >
+        <i class="bi bi-whatsapp mr-5"></i>Conversar ahora
+      </button>
+      @if(listaConvalidar.length != 0){
+      <button
+        class="py-4 px-4 bg-white flex items-center justify-center text-2xl shadow-lg rounded-lg hover:bg-gray-300 transition-all duration-300"
+        (click)="generarReporte()"
+      >
+        <i class="bi bi-file-earmark-pdf mr-5"></i>Descargar</button
+      >}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+@if(formData){
+<p class="text-center my-6 text-md text-white">
+  Genial, {{ formData.nomape }} solo cuéntanos tu institución, carrera de
+  procedencia y la carrera que te gustaría estudiar en la UPLA.
+</p>
+<form class="space-y-4 mb-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nombres-apellidos" class="block text-lg font-medium text-white"
+      >Institución de procedencia</label
+    >
+    <ng-autocomplete
+      [data]="instituciones"
+      [searchKeyword]="keyword"
+      placeholder="Elija un instituto"
+      (selected)="selectEvent($event)"
+      (inputChanged)="onChangeSearch($event)"
+      (inputFocused)="onFocused($event)"
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate"
+      formControlName="institucion"
+    >
+    </ng-autocomplete>
+    @if (form.get('institucion')?.invalid && form.get('institucion')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('institucion')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      }
+    </div>
+    }
+  </div>
+  <div>
+    <label for="carrera" class="block text-lg font-medium text-white"
+      >Carrera de procedencia</label
+    >
+    <ng-autocomplete
+      [data]="CarrerasByInstitucion"
+      formControlName="carrera"
+      [searchKeyword]="keyword"
+      (inputChanged)="onChangeSearchCarrera($event)"
+      [placeholder]="plcarrera"
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate"
+    ></ng-autocomplete>
+
+    @if (form.get('carrera')?.invalid && form.get('carrera')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('carrera')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      }
+    </div>
+    }
+  </div>
+  <div>
+    <label for="carrera" class="block text-lg font-medium text-white"
+      >Carrera de la UPLA</label
+    >
+    <ng-autocomplete
+      [data]="CarreraUpla"
+      formControlName="carreraupla"
+      [searchKeyword]="keyword"
+      (inputChanged)="onChangeSearchCarrera($event)"
+      placeholder="Elige una carrera"
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate"
+    ></ng-autocomplete>
+
+    @if (form.get('carreraupla')?.invalid && form.get('carreraupla')?.touched) {
+    <div class="text-red-400 text-lg font-semibold">
+      @if(form.get('carreraupla')?.hasError('required')){
+      <small>Este campo es obligatorio.</small>
+      }
+    </div>
+    }
+  </div>
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item.nombre"></a>
+  </ng-template>
+
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template>
+
+  <div class="lg:inline-flex block items-center justify-center gap-5 w-full">
+    <button
+      type="button"
+      class="bg-transparent text-green-400 hover:text-green-700 py-2 px-4 rounded-lg text-2xl font-normal transition duration-300 mt-6"
+      (click)="goBack()"
+    >
+      <i class="bi bi-arrow-left"></i>
+      Volver
+    </button>
+    <button
+      type="submit"
+      class="bg-green-600 text-white py-2 px-4 rounded-lg text-2xl font-bold transition duration-300 mt-6"
+      [disabled]="form.invalid"
+      [ngClass]="{
+        'bg-gray-300': form.invalid,
+        'hover:bg-green-500': !form.invalid
+      }"
+    >
+      Iniciar simulación
+      <i class="bi bi-arrow-right ml-2 animate-move-left-right text-2xl"></i>
+    </button>
+  </div>
+</form>
+
+}

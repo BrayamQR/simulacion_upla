@@ -1,0 +1,58 @@
+<section class="relative w-full">
+  <div
+    class="absolute top-0 left-0 w-full min-h-full flex flex-col lg:flex-row"
+  >
+    <div
+      class="w-full py-10 bg-gradient-to-r from-black via-black to-white text-white relative flex-1 inline-flex"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-no-repeat bg-center"
+        [ngStyle]="{ 'background-image': 'url(' + fondo + ')', opacity: '0.6' }"
+      ></div>
+
+      <div class="absolute top-10 lg:left-20 left-10 z-10 inline-block">
+        <img [src]="logo" alt="Logo" class="w-[300px]" />
+      </div>
+
+      <div class="w-full lg:w-1/3 lg:left-48 left-10 relative z-20 mt-40">
+        <h1
+          class="lg:text-[40px] font-black tracking-wide uppercase mb-5 text-[7vw] i"
+        >
+          Ven y crece con nosotros
+        </h1>
+        <div
+          class="bg-gradient-to-r from-blue-500 to-blue-800 px-8 py-4 inline-flex text-center justify-center items-center lg:text-3xl font-bold rounded-lg mb-5 whitespace-nowrap text-[5vw]"
+        >
+          Convalida hasta el
+          <span class="lg:text-5xl font-black ml-3 text-[7vw]">60%</span>
+        </div>
+        <p class="lg:text-2xl mt-2 mb-5 inline-block md:text-[3vw]">
+          de tus estudios previos, ya sea de un instituto o universidad.
+        </p>
+        <br />
+        <p
+          class="lg:text-2xl mt-2 font-light italic inline-block md:text-[3vw]"
+        >
+          Da el siguiente paso para lograr tus metas académicas y profesionales.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="w-full lg:w-1/3 p-6 justify-center items-center z-30 inline-flex bg-gradient-to-b from-blue-900 to-blue-700 opacity-80"
+    >
+      <div class="w-full max-w-md inline-block">
+        <h2
+          class="text-4xl font-black text-center mb-6 text-white tracking-wide"
+        >
+          Simulador de Convalidaciones UPLA
+        </h2>
+        <p class="text-gray-200 font-light text-lg text-center mb-4">
+          Completa tus datos y conoce las materias que puedes convalidar.
+        </p>
+        <div class="border-t-4 border-green-500 mb-6"></div>
+        <router-outlet />
+      </div>
+    </div>
+  </div>
+</section>
